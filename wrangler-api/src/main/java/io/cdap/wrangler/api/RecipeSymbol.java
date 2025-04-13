@@ -15,6 +15,9 @@
  */
 
 package io.cdap.wrangler.api;
+import io.cdap.wrangler.api.parser.ByteSize;
+import io.cdap.wrangler.api.parser.TimeDuration;
+
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -141,6 +144,13 @@ public final class RecipeSymbol {
         JsonObject object = new JsonObject();
         object.addProperty("token", tok.type().toString());
         object.addProperty("value", tok.value().toString());
+        // Handling ByteSize and TimeDuration token serialization if needed
+      if (tok instanceof ByteSize) {
+        object.addProperty("value", ((ByteSize) tok).getValue());
+      }
+      if (tok instanceof TimeDuration) {
+        object.addProperty("value", ((TimeDuration) tok).getValue());
+      }
         darray.add(object);
       }
       array.add(darray);
@@ -217,6 +227,14 @@ public final class RecipeSymbol {
       loadableDirectives.add(directive);
     }
 
+    // Assuming `ByteSize` and `TimeDuration` are token types that extend `Token`
+    public void addByteSizeToken(ByteSize byteSize) {
+      group.add(byteSize);
+    }
+
+    public void addTimeDurationToken(TimeDuration timeDuration) {
+      group.add(timeDuration);
+    }
     /**
      * Returns a fully constructed and valid <code>RecipeSymbol</code> object.
      *

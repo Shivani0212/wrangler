@@ -17,7 +17,6 @@
 package io.cdap.wrangler.api.parser;
 
 import io.cdap.wrangler.api.Optional;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,6 +125,10 @@ public final class UsageDefinition implements Serializable {
           sb.append("prop:{key:value,[key:value]*");
         } else if (token.type().equals(TokenType.RANGES)) {
           sb.append("start:end=[bool|text|numeric][,start:end=[bool|text|numeric]*");
+        } else if (token.type().equals(TokenType.BYTE_SIZE)) {
+          sb.append(":").append(token.name()).append(" (e.g., 10MB, 512KB)");
+        } else if (token.type().equals(TokenType.TIME_DURATION)) {
+          sb.append(":").append(token.name()).append(" (e.g., 100ms, 5s)");
         }
       }
 

@@ -42,6 +42,12 @@ public class TimeDuration implements Token {
     return milliseconds;
   }
 
+  public long getValue() {
+  return getMilliseconds();
+  }
+
+
+
   @Override
   public Object value() {
     return milliseconds;

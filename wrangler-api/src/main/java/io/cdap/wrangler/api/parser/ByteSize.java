@@ -43,6 +43,11 @@ public class ByteSize implements Token {
     return bytes;
   }
 
+  public long getValue() {
+  return getBytes();
+  }
+
+
   @Override
   public Object value() {
     return bytes;
