@@ -174,7 +174,7 @@ public class ConvertStringTest {
     input = "a\u0085\u0085\u0085b\u00A0\u00A0c\u1680\u1680d\u180E\u180Ee\u2000\u2000f\u2001\u2001g"
       + "\u2002\u2002h\u2003\u2003i\u2004\u2004";
     cleanStr = convertString.removeRepeatedWhitespaces(input);
-    //Assert.assertEquals("a\u0085b\u00A0c\u1680d\u180Ee\u2000f\u2001g\u2002h\u2003i\u2004", cleanStr); 
+    // Assert.assertEquals("a\u0085b\u00A0c\u1680d\u180Ee\u2000f\u2001g\u2002h\u2003i\u2004", cleanStr); 
     Assert.assertEquals("a\u0085b\u00A0c\u1680d\u180E\u180Ee\u2000f\u2001g\u2002h\u2003i\u2004", cleanStr);
 
     input = "a\u2005\u2005\u2005b\u2006\u2006c\u2007\u2007d\u2008\u2008e\u2009\u2009f\u200A\u200Ag"

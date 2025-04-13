@@ -58,6 +58,7 @@ public class AvroSchemaGlossary {
     try {
       glossary = avroSchemaLoader.load();
     } catch (IOException e) {
+      LOG.error("Failed to load schemas", e);  // Log the full exception
       return false;
     }
     return true;

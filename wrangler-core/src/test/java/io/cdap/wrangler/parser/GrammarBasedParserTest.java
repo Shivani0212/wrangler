@@ -21,6 +21,9 @@ import io.cdap.wrangler.api.CompileStatus;
 import io.cdap.wrangler.api.Compiler;
 import io.cdap.wrangler.api.Directive;
 import io.cdap.wrangler.api.RecipeParser;
+import io.cdap.wrangler.api.parser.ByteSize;
+import io.cdap.wrangler.api.parser.TimeDuration;
+import io.cdap.wrangler.api.parser.Token;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -75,4 +78,22 @@ public class GrammarBasedParserTest {
     Assert.assertEquals(0, directives.size());
   }
 
+  @Test
+    public void testByteSizeTokenParsing() {
+        String input = "10KB";
+        Token token = new ByteSize(input);
+        Assert.assertEquals(10240, ((ByteSize) token).getBytes()); // 10KB = 10240 bytes
+    }
+
+    @Test
+    public void testTimeDurationTokenParsing() {
+        String input = "150ms";
+        Token token = new TimeDuration(input);
+        Assert.assertEquals(150, ((TimeDuration) token).getMilliseconds()); 
+    }
+
 }
+
+
+
+
