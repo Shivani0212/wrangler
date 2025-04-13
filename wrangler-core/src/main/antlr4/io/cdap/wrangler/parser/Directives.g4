@@ -140,16 +140,8 @@ numberRange
  ;
 
 value
- : String | Number | Column | Bool | BYTE_SIZE | TIME_DURATION
- ;
-
- byteSizeArg
- : BYTE_SIZE
- ;
-
- timeDurationArg
- : TIME_DURATION
- ;
+ : String | Number | Column | Bool | BYTE_SIZE | TIME_DURATION;
+ 
 
 ecommand
  : '!' Identifier
@@ -265,28 +257,14 @@ Number
  : Int ('.' Digit*)?
  ;
 
- BYTE_SIZE
- : Int ('.' Digit*)? BYTE_UNIT
- ;
-
-TIME_DURATION
- : Int ('.' Digit*)? TIME_UNIT
- ;
+BYTE_SIZE: DIGITS ('.' DIGITS)? BYTE_UNIT;
+fragment BYTE_UNIT: ('B' | 'KB' | 'MB' | 'GB' | 'TB');
 
 
- fragment BYTE_UNIT
- : [kK][bB]
- | [mM][bB]
- | [gG][bB]
- | [tT][bB]
- ;
+TIME_DURATION: DIGITS ('.' DIGITS)? TIME_UNIT;
+fragment TIME_UNIT: ('ms' | 's' | 'sec' | 'seconds' | 'm' | 'min' | 'h' | 'hr' | 'hours');
 
-fragment TIME_UNIT
- : [mM][sS]
- | [sS]
- | [mM][iI][nN]
- | [hH]
- ;
+fragment DIGITS: [0-9]+;
 
 Identifier
  : [a-zA-Z_\-] [a-zA-Z_0-9\-]*

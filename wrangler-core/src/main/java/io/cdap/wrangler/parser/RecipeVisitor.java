@@ -317,6 +317,72 @@ public final class RecipeVisitor extends DirectivesBaseVisitor<RecipeSymbol.Buil
     return builder;
   }
 
+  @Override
+public RecipeSymbol.Builder visitByteSize(DirectivesParser.ByteSizeContext ctx) {
+    // Extract the numeric value and the byte unit (e.g., KB, MB, GB)
+    String number = ctx.Number().getText();
+    String unit = ctx.unit().getText();  // Assuming unit is a separate part of the rule
+
+    // Create a token for ByteSize with number and unit
+    builder.addToken(new ByteSize(new LazyNumber(number), unit));
+    return builder;
+}
+
+@Override
+public RecipeSymbol.Builder visitTimeDuration(DirectivesParser.TimeDurationContext ctx) {
+    // Extract the numeric value and the time unit (e.g., seconds, minutes, hours)
+    String number = ctx.Number().getText();
+    String unit = ctx.unit().getText();  // Assuming unit is a separate part of the rule
+
+    // Create a token for TimeDuration with number and unit
+    builder.addToken(new TimeDuration(new LazyNumber(number), unit));
+    return builder;
+}
+
+@Override
+public RecipeSymbol.Builder visitValue(DirectivesParser.ValueContext ctx) {
+    // Get the full text from the context for any additional checks
+    String value = ctx.getText();
+    
+    // Check for a specific value (example: checking for a specific string in the value)
+    if (value.equals("expectedValue")) {
+        // Handle the specific case when the value matches
+        // You can log, throw an exception, or handle as needed
+        System.out.println("Specific value found: " + value);
+    }
+
+    // Check if the value context is related to ByteSize
+    if (ctx.byteSize() != null) {
+        // Extract the numeric value and the byte unit (e.g., KB, MB, GB)
+        String number = ctx.byteSize().Number().getText();
+        String unit = ctx.byteSize().unit().getText();  // Assuming unit is a separate part of the rule
+        
+        // Create a token for ByteSize with number and unit
+        builder.addToken(new ByteSize(new LazyNumber(number), unit));
+    }
+    // Check if the value context is related to TimeDuration
+    else if (ctx.timeDuration() != null) {
+        // Extract the numeric value and the time unit (e.g., seconds, minutes, hours)
+        String number = ctx.timeDuration().Number().getText();
+        String unit = ctx.timeDuration().unit().getText();  // Assuming unit is a separate part of the rule
+        
+        // Create a token for TimeDuration with number and unit
+        builder.addToken(new TimeDuration(new LazyNumber(number), unit));
+    }
+    // Handle any other value cases if necessary (e.g., numeric values, other token types)
+    else if (ctx.Number() != null) {
+        // Example: Handle a generic numeric value (this might depend on your grammar)
+        String number = ctx.Number().getText();
+        // Create a generic token (e.g., just a number token or similar)
+        builder.addToken(new Token(number));
+    }
+
+    return builder;
+}
+
+
+
+
   private SourceInfo getOriginalSource(ParserRuleContext ctx) {
     int a = ctx.getStart().getStartIndex();
     int b = ctx.getStop().getStopIndex();
