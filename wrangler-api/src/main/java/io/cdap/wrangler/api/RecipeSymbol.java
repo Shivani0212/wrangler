@@ -15,14 +15,15 @@
  */
 
 package io.cdap.wrangler.api;
-import io.cdap.wrangler.api.parser.ByteSize;
-import io.cdap.wrangler.api.parser.TimeDuration;
 
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import io.cdap.wrangler.api.annotations.PublicEvolving;
+import io.cdap.wrangler.api.parser.ByteSize;
+import io.cdap.wrangler.api.parser.TimeDuration;
 import io.cdap.wrangler.api.parser.Token;
 
 import java.util.ArrayList;

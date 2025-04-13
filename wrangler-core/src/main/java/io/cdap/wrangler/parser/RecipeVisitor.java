@@ -19,10 +19,9 @@ import io.cdap.wrangler.api.LazyNumber;
 import io.cdap.wrangler.api.RecipeSymbol;
 import io.cdap.wrangler.api.SourceInfo;
 import io.cdap.wrangler.api.Triplet;
-import io.cdap.wrangler.api.parser.ByteSize;
-import io.cdap.wrangler.api.parser.TimeDuration;
 import io.cdap.wrangler.api.parser.Bool;
 import io.cdap.wrangler.api.parser.BoolList;
+import io.cdap.wrangler.api.parser.ByteSize;
 import io.cdap.wrangler.api.parser.ColumnName;
 import io.cdap.wrangler.api.parser.ColumnNameList;
 import io.cdap.wrangler.api.parser.DirectiveName;
@@ -34,6 +33,7 @@ import io.cdap.wrangler.api.parser.Properties;
 import io.cdap.wrangler.api.parser.Ranges;
 import io.cdap.wrangler.api.parser.Text;
 import io.cdap.wrangler.api.parser.TextList;
+import io.cdap.wrangler.api.parser.TimeDuration;
 import io.cdap.wrangler.api.parser.Token;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.Interval;
@@ -219,13 +219,9 @@ public RecipeSymbol.Builder visitValue(DirectivesParser.ValueContext ctx) {
   // Check if it's a ByteSize (example: "1GB", "100MB")
   if (value.matches("\\d+(KB|MB|GB|TB|PB)")) {
     builder.addToken(new ByteSize(value)); // Assuming ByteSize is a token class
-  }
-  // Check if it's a TimeDuration (example: "5d", "2h")
-  else if (value.matches("\\d+(d|h|m|s)")) {
+  } else if (value.matches("\\d+(d|h|m|s)")) { // Check if it's a TimeDuration (example: "5d", "2h")
     builder.addToken(new TimeDuration(value)); // Assuming TimeDuration is a token class
-  }
-  // Otherwise, treat it as a generic Text token
-  else {
+  } else { // Otherwise, treat it as a generic Text token
     builder.addToken(new Text(value));
   }
 
